@@ -4,9 +4,16 @@
  */
 package studentmanager;
 
+import db.MyConnection;
 import java.awt.Color;
 import java.awt.Image;
+import java.awt.print.PrinterException;
 import java.io.File;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.MessageFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,7 +26,6 @@ import javax.swing.JTable;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import sun.java2d.pipe.SpanShapeRenderer;
 
 /**
  *
@@ -351,7 +357,7 @@ public class Home extends javax.swing.JFrame {
                         .addComponent(jLabel13)
                         .addGap(33, 33, 33)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(72, Short.MAX_VALUE))
+                        .addContainerGap(75, Short.MAX_VALUE))
                     .addComponent(jPanel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
@@ -402,7 +408,7 @@ public class Home extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2))
+                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
@@ -418,7 +424,7 @@ public class Home extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
-                    .addComponent(jTextField4))
+                    .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
@@ -430,12 +436,12 @@ public class Home extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10)
-                    .addComponent(jTextField7))
+                    .addComponent(jTextField7, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel11)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -448,14 +454,29 @@ public class Home extends javax.swing.JFrame {
         jLabel12.setText("Search Student");
 
         searchField.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        searchField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchFieldActionPerformed(evt);
+            }
+        });
 
         jButton2.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jButton2.setText("Search");
         jButton2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jButton3.setText("Refresh");
         jButton3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -541,6 +562,11 @@ public class Home extends javax.swing.JFrame {
 
         jButton7.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jButton7.setText("Print");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         jButton8.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jButton8.setText("Clear");
@@ -1638,7 +1664,7 @@ public class Home extends javax.swing.JFrame {
     }
 
     public void clearStudent() {
-        // Khi ta clear thì thông tin điền được xóa hết
+        // Khi ta clear thì thông tin rỗng.
         jTextField1.setText(String.valueOf(student.getMax()));
         jTextField2.setText(null);
         jTextField3.setText(null);
@@ -1763,7 +1789,8 @@ public class Home extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         for (double i = 0.1; i < 1.0; i += 0.1) {
             String s = i + "";
-            float f = Float.valueOf(s);
+//            float f = Float.valueOf(s);
+            float f = Float.parseFloat(s);
             this.setOpacity(f);
             try {
                 Thread.sleep(40);
@@ -1835,28 +1862,60 @@ public class Home extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         if (isEmptyStudent()) {
             int id = Integer.parseInt(jTextField1.getText());
-            String name = jTextField2.getText();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            String date = dateFormat.format(jDateChooser1.getDate());
-            String gender = jComboBox1.getSelectedItem().toString();
-            String email = jTextField3.getText();
-            String phone = jTextField4.getText();
-            String father = jTextField5.getText();
-            String mother = jTextField6.getText();
-            String address1 = jTextField7.getText();
-            String address2 = jTextField8.getText();
-            student.update(id, name, date, gender, email, phone, father, mother, address1, address2, imagePath);
-            jTable1.setModel(new DefaultTableModel(null, new Object[]{"Student ID", "Student Name",
-                "Date of Birth", "Gender", "Email", "Phone Number",
-                "Father Name", "Mother Name", "Address Line 1", "Address Line 2", "Image Path"}));
-            student.getStudentValue(jTable1, "");   // Đẩy thông tin sinh viên bảng sinh viên. 
-            clearStudent();
+            if (student.isIdExist(id)) {
+                if (!check()) {
+                    String name = jTextField2.getText();
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    String date = dateFormat.format(jDateChooser1.getDate());
+                    String gender = jComboBox1.getSelectedItem().toString();
+                    String email = jTextField3.getText();
+                    String phone = jTextField4.getText();
+                    String father = jTextField5.getText();
+                    String mother = jTextField6.getText();
+                    String address1 = jTextField7.getText();
+                    String address2 = jTextField8.getText();
+                    student.update(id, name, date, gender, email, phone, father, mother, address1, address2, imagePath);
+                    jTable1.setModel(new DefaultTableModel(null, new Object[]{"Student ID", "Student Name",
+                        "Date of Birth", "Gender", "Email", "Phone Number",
+                        "Father Name", "Mother Name", "Address Line 1", "Address Line 2", "Image Path"}));
+                    student.getStudentValue(jTable1, "");   // Đẩy thông tin sinh viên bảng sinh viên. 
+                    clearStudent();
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Student id doesn't exits");
+            }
         }
     }//GEN-LAST:event_jButton5ActionPerformed
+    public boolean check() {
+        String newEmail = jTextField3.getText();
+        String newPhone = jTextField4.getText();
+        String oldEmail = model.getValueAt(rowIndex, 4).toString();
+        String oldPhone = model.getValueAt(rowIndex, 5).toString();
+        if (newEmail.equals(oldEmail) && newPhone.equals(oldPhone)) {
+            return false;
+        } else {
+            if (!newEmail.equals(oldEmail)) {
+                boolean x = student.isEmailExist(newEmail);
+                if (x) {
+                    JOptionPane.showMessageDialog(this, "This email already exists");
+                }
+                return x;
+            }
+            if (!newPhone.equals(oldPhone)) {
+                boolean x = student.isPhoneExist(newPhone);
+                if (x) {
+                    JOptionPane.showMessageDialog(this, "This phone numbber already exists");
+                }
+                return x;
+            }
+        }
+        return false;
+    }
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         model = (DefaultTableModel) jTable1.getModel();
         rowIndex = jTable1.getSelectedRow();
+
         jTextField1.setText(model.getValueAt(rowIndex, 0).toString());
         jTextField2.setText(model.getValueAt(rowIndex, 1).toString());
         try {
@@ -1871,6 +1930,7 @@ public class Home extends javax.swing.JFrame {
         } else {
             jComboBox1.setSelectedIndex(1);
         }
+
         jTextField3.setText(model.getValueAt(rowIndex, 4).toString());
         jTextField4.setText(model.getValueAt(rowIndex, 5).toString());
         jTextField5.setText(model.getValueAt(rowIndex, 6).toString());
@@ -1884,8 +1944,53 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
+        int id = Integer.parseInt(jTextField1.getText());   // Lấy id cần xóa.
+        if (student.isIdExist(id)) {
+            student.delete(id);
+            jTable1.setModel(new DefaultTableModel(null, new Object[]{"Student ID", "Student Name",
+                "Date of Birth", "Gender", "Email", "Phone Number",
+                "Father Name", "Mother Name", "Address Line 1", "Address Line 2", "Image Path"}));
+            student.getStudentValue(jTable1, "");   // Đẩy thông tin sinh  lên bảng sinh viên. 
+            clearStudent();
+        } else {
+            JOptionPane.showMessageDialog(this, "");
+        }
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchFieldActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       if(searchField.getText().isEmpty()){
+           JOptionPane.showMessageDialog(this, "Please enter a student id");
+       }else{
+           jTable1.setModel(new DefaultTableModel(null, new Object[]{"Student ID", "Student Name",
+                        "Date of Birth", "Gender", "Email", "Phone Number",
+                        "Father Name", "Mother Name", "Address Line 1", "Address Line 2", "Image Path"}));
+                    student.getStudentValue(jTable1,searchField.getText());
+                    clearStudent();
+       }
+     
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        jTable1.setModel(new DefaultTableModel(null, new Object[]{"Student ID", "Student Name",
+            "Date of Birth", "Gender", "Email", "Phone Number",
+            "Father Name", "Mother Name", "Address Line 1", "Address Line 2", "Image Path"}));
+        student.getStudentValue(jTable1, null);
+        searchField.setText(null);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        try {
+            MessageFormat header = new MessageFormat("Students Information");
+            MessageFormat footer = new MessageFormat("Page{0, number, integer}");
+            jTable1.print(JTable.PrintMode.FIT_WIDTH, header, footer);
+        } catch (PrinterException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     private ImageIcon imageAdjust(String path, byte[] pic) {
         ImageIcon myImage = null;

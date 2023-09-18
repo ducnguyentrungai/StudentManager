@@ -91,6 +91,20 @@ public class Student {
         return false;
     }
 
+    public boolean isIdExist(int id) {
+        try {
+            ps = con.prepareStatement("select * from student where id = ?");
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Student.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
     // Lấy dữ liệu trong database và đổ đầy vào bảng sinh viên.
     public void getStudentValue(JTable table, String searchValue) {
         String sql = "SELECT * FROM student\n"
@@ -108,7 +122,7 @@ public class Student {
                 row[1] = rs.getString(2);
                 row[2] = rs.getString(3);
                 row[3] = rs.getString(4);
-                row[4] = rs.getString(4);
+                row[4] = rs.getString(5);
                 row[5] = rs.getString(6);
                 row[6] = rs.getString(7);
                 row[7] = rs.getString(8);
@@ -123,13 +137,12 @@ public class Student {
     }
 
     public void update(int id, String sname, String date, String gender, String email,
-             String phone, String father, String mother, String address1, String address2, String imagePath) {
-        
-        
-        String sql = "update student set name =?, date of birth =?, gender = ?,"
-                + " email = ?, phone = ?, father_name = ?, mother_name = ?"
-                + "address1 = ?, address2 = ?, image path = ?, where id = ?";
-        
+            String phone, String father, String mother, String address1, String address2, String imagePath) {
+
+        String sql = "UPDATE student SET name = ?, date_of_birth = ?, gender = ?, email = ?"
+                + ", phone = ?, father_name = ?, mother_name = ?, address1 = ?, address2 = ?"
+                + ", image_path = ? WHERE id = ?;";
+
         try {
             ps = con.prepareStatement(sql);
             ps.setString(1, sname);
@@ -143,13 +156,31 @@ public class Student {
             ps.setString(9, address2);
             ps.setString(10, imagePath);
             ps.setInt(11, id);
-            
-            if(ps.executeUpdate()> 0){
+
+            if (ps.executeUpdate() > 0) {
                 JOptionPane.showMessageDialog(null, "Student data update successfully");
             }
         } catch (SQLException ex) {
             Logger.getLogger(Student.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
+
+    public void delete(int id) {
+        int yesOrNo = JOptionPane.showConfirmDialog(null, "Course and score  records will also be deleted", "Student Dlete", JOptionPane.OK_CANCEL_OPTION);
+        if (yesOrNo == JOptionPane.OK_OPTION) {
+            try {
+                ps = con.prepareStatement("delete  from student where id = ?");
+                ps.setInt(1, id);
+                if (ps.executeUpdate() > 0) {
+                    JOptionPane.showMessageDialog(null, "Student deleted sucessfully");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Student.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+   
+    
 }
