@@ -28,6 +28,7 @@ public class Home extends javax.swing.JFrame {
 
     Student student = new Student();
     Course course = new Course();
+    Score score = new Score();
     int xx, xy;
     private DefaultTableModel model;
     private String imagePath;
@@ -1099,16 +1100,16 @@ public class Home extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel14Layout.createSequentialGroup()
-                        .addComponent(jLabel57)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton37, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(90, 90, 90))
-                    .addGroup(jPanel14Layout.createSequentialGroup()
                         .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel56)
                             .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel14Layout.createSequentialGroup()
+                        .addComponent(jLabel57)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton37, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(67, 67, 67))))
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1137,6 +1138,11 @@ public class Home extends javax.swing.JFrame {
         jTextCourse2.setEditable(false);
         jTextCourse2.setBackground(new java.awt.Color(204, 204, 204));
         jTextCourse2.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
+        jTextCourse2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextCourse2ActionPerformed(evt);
+            }
+        });
 
         jTextCourse3.setEditable(false);
         jTextCourse3.setBackground(new java.awt.Color(204, 204, 204));
@@ -1352,6 +1358,11 @@ public class Home extends javax.swing.JFrame {
 
         jButton25.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jButton25.setText("Print");
+        jButton25.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton25ActionPerformed(evt);
+            }
+        });
 
         jButton26.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jButton26.setText("Clear");
@@ -1428,7 +1439,7 @@ public class Home extends javax.swing.JFrame {
         jPanel19Layout.setHorizontalGroup(
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel19Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
+                .addContainerGap()
                 .addComponent(jPanel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1694,6 +1705,7 @@ public class Home extends javax.swing.JFrame {
         tableViewCourse();
         jTextField1.setText(String.valueOf(student.getMax()));
         jTextField9.setText(String.valueOf(course.getMax()));
+        jTextField12.setText(String.valueOf(score.getMax()));
     }
 
     private void tableViewStudent() {
@@ -1746,6 +1758,7 @@ public class Home extends javax.swing.JFrame {
     }
 
     public void clearSore() {
+        jTextField12.setText(String.valueOf(score.getMax()));
         jTextField14.setText(null);
         jTextField15.setText(null);
         jTextField13.setText(null);
@@ -1762,7 +1775,6 @@ public class Home extends javax.swing.JFrame {
         jTextScore4.setText("0.0");
         jTextScore5.setText("0.0");
         jTable3.clearSelection();
-
 
     }
 
@@ -2019,7 +2031,7 @@ public class Home extends javax.swing.JFrame {
         jTextField6.setText(model.getValueAt(rowIndex, 7).toString());
         jTextField7.setText(model.getValueAt(rowIndex, 8).toString());
         jTextField8.setText(model.getValueAt(rowIndex, 9).toString());
-        String path = model.getValueAt(rowIndex, 10).toString();
+        String path = String.valueOf(model.getValueAt(rowIndex, 10));
         imagePath = path;
         jLabelImage.setIcon(imageAdjust(path, null));
 
@@ -2197,10 +2209,28 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton26ActionPerformed
 
     private void jButton37ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton37ActionPerformed
-       if(jTextField14.getText().isEmpty()){
-            
-       }
+        if (jTextField14.getText().isEmpty() || jTextField15.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Student id or semester id missing");
+        } else {
+            int sid = Integer.parseInt(jTextField14.getText());
+            int seNo = Integer.parseInt(jTextField15.getText());
+            score.getDetails(sid, seNo);
+        }
     }//GEN-LAST:event_jButton37ActionPerformed
+
+    private void jButton25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton25ActionPerformed
+        try {
+            MessageFormat header = new MessageFormat("Score Information");
+            MessageFormat footer = new MessageFormat("Page{0, number, integer}");
+            jTable3.print(JTable.PrintMode.FIT_WIDTH, header, footer);
+        } catch (PrinterException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton25ActionPerformed
+
+    private void jTextCourse2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextCourse2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextCourse2ActionPerformed
 
     private ImageIcon imageAdjust(String path, byte[] pic) {
         ImageIcon myImage = null;
@@ -2338,19 +2368,19 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
-    private javax.swing.JTextField jTextCourse1;
-    private javax.swing.JTextField jTextCourse2;
-    private javax.swing.JTextField jTextCourse3;
-    private javax.swing.JTextField jTextCourse4;
-    private javax.swing.JTextField jTextCourse5;
+    public static javax.swing.JTextField jTextCourse1;
+    public static javax.swing.JTextField jTextCourse2;
+    public static javax.swing.JTextField jTextCourse3;
+    public static javax.swing.JTextField jTextCourse4;
+    public static javax.swing.JTextField jTextCourse5;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     public static javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField13;
+    public static javax.swing.JTextField jTextField13;
     private javax.swing.JTextField jTextField14;
     private javax.swing.JTextField jTextField15;
-    private javax.swing.JTextField jTextField16;
+    public static javax.swing.JTextField jTextField16;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField25;
     private javax.swing.JTextField jTextField3;

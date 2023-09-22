@@ -14,7 +14,9 @@ import javax.swing.table.DefaultTableModel;
 
 public class Student {
 
+    // Kết nối với database.
     Connection con = MyConnection.getConnection();
+    // 
     PreparedStatement ps;
 
     public int getMax() {
@@ -22,7 +24,7 @@ public class Student {
         Statement st;
         try {
             st = con.createStatement();
-            ResultSet rs = st.executeQuery("select max(id) from student");
+            ResultSet rs = st.executeQuery("select max(id) from student");  // Câu lệnh MySQL này lấy ra id lớn nhất trong table student.
             while (rs.next()) {
                 id = rs.getInt(1);
             }
@@ -76,8 +78,10 @@ public class Student {
         return false;
     }
 
-    // Kiểm tra số điện thoại bị trùng
+    
     public boolean isPhoneExist(String phone) {
+        // Kiểm tra số điện thoại bị trùng
+        // Truy vấn số điện thoại trong database nếu có sdt trả về true ngược lại trả về false.
         try {
             ps = con.prepareStatement("select * from student where phone = ?");
             ps.setString(1, phone);
@@ -181,6 +185,4 @@ public class Student {
         }
     }
 
-   
-    
 }
