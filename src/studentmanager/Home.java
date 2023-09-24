@@ -1054,6 +1054,11 @@ public class Home extends javax.swing.JFrame {
         jTextField13.setEditable(false);
         jTextField13.setBackground(new java.awt.Color(204, 204, 204));
         jTextField13.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
+        jTextField13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField13ActionPerformed(evt);
+            }
+        });
 
         jLabel54.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel54.setText("Semester ");
@@ -1352,6 +1357,11 @@ public class Home extends javax.swing.JFrame {
 
         jButton22.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jButton22.setText("Save");
+        jButton22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton22ActionPerformed(evt);
+            }
+        });
 
         jButton23.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jButton23.setText("Uppdate");
@@ -2231,6 +2241,23 @@ public class Home extends javax.swing.JFrame {
     private void jTextCourse2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextCourse2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextCourse2ActionPerformed
+
+    private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
+        if(!jTextField13.getText().isEmpty()){
+            if(!score.isIdExist(Integer.parseInt(jTextField12.getText()))){
+                
+            }else{
+                JOptionPane.showMessageDialog(this,  "Score id already exists");
+            }
+        }else{
+            
+            JOptionPane.showMessageDialog(this, "No student select");
+        }
+    }//GEN-LAST:event_jButton22ActionPerformed
+
+    private void jTextField13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField13ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField13ActionPerformed
 
     private ImageIcon imageAdjust(String path, byte[] pic) {
         ImageIcon myImage = null;

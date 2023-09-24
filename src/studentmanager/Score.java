@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package studentmanager;
 
 import db.MyConnection;
@@ -14,10 +11,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author pc
- */
 public class Score {
 
     Connection con = MyConnection.getConnection();
@@ -61,4 +54,33 @@ public class Score {
         }
         return false;
     }
+    
+    public boolean isIdExist(int id) {
+        try {
+            ps = con.prepareStatement("select * from score where id = ?");
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Score.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    public boolean iSiSemeterNodExist(int sid) {
+        try {
+            ps = con.prepareStatement("select * from score where id = ?");
+            ps.setInt(1, sid);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Score.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    
 }
