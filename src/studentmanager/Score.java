@@ -1,4 +1,3 @@
-
 package studentmanager;
 
 import db.MyConnection;
@@ -54,7 +53,7 @@ public class Score {
         }
         return false;
     }
-    
+
     public boolean isIdExist(int id) {
         try {
             ps = con.prepareStatement("select * from score where id = ?");
@@ -68,10 +67,12 @@ public class Score {
         }
         return false;
     }
-    public boolean iSiSemeterNodExist(int sid) {
+
+    public boolean isSiSemeterNodExist(int sid, int semesterNo) {
         try {
-            ps = con.prepareStatement("select * from score where id = ?");
+            ps = con.prepareStatement("select * from score where student_id = ? and semester = ?");
             ps.setInt(1, sid);
+            ps.setInt(1, semesterNo);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 return true;
@@ -81,6 +82,43 @@ public class Score {
         }
         return false;
     }
-    
-    
+    // Đưa dữ liệu lên database
+
+    public void insert(int id, int sid, int se,
+            String course1, String course2, String course3, String course4, String course5,
+            double score1, double score2, double score3, double score4, double score5,
+            double average) 
+    {
+        
+        String sql = "insert into score values"
+                + "(?, ?, ?, "
+                + "?, ?, ?, ?, ?, "
+                + "?, ?, ?, ?, ?, "
+                + "?)";
+        
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.setInt(2, sid);
+            ps.setInt(3, se);
+            ps.setString(4, course1);
+            ps.setDouble(5, score1);
+            ps.setString(6, course2);
+            ps.setDouble(7, score2);
+            ps.setString(8, course3);
+            ps.setDouble(9, score3);
+            ps.setString(10, course4);
+            ps.setDouble(11, score4);
+            ps.setString(12, course5);
+            ps.setDouble(13, score5);
+            ps.setDouble(14, average);
+
+            if (ps.executeUpdate() > 0) {
+                JOptionPane.showMessageDialog(null, "New course added succesfully");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Student.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }
