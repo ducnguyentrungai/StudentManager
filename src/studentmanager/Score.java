@@ -9,6 +9,8 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class Score {
 
@@ -32,6 +34,7 @@ public class Score {
 
     public boolean getDetails(int sid, int semeterNo) {
         try {
+            //
             ps = con.prepareStatement("select * from course where student_id = ? and semester = ?");
             ps.setInt(1, sid);
             ps.setInt(2, semeterNo);
@@ -87,15 +90,14 @@ public class Score {
     public void insert(int id, int sid, int se,
             String course1, String course2, String course3, String course4, String course5,
             double score1, double score2, double score3, double score4, double score5,
-            double average) 
-    {
-        
+            double average) {
+
         String sql = "insert into score values"
                 + "(?, ?, ?, "
                 + "?, ?, ?, ?, ?, "
                 + "?, ?, ?, ?, ?, "
                 + "?)";
-        
+
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
@@ -119,6 +121,62 @@ public class Score {
         } catch (SQLException ex) {
             Logger.getLogger(Student.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    // Lấy dữ liệu trong database và đổ đầy vào bảng score
+    public void getScoreValue(JTable table, String searchValue) {
+        String sql = "SELECT * FROM score\n"
+                + "WHERE CONCAT(id, student_id, semester) LIKE ? \n"
+                + "ORDER BY id DESC;";
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, "%" + searchValue + "%");
+            ResultSet rs = ps.executeQuery();
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            Object[] row;
+            while (rs.next()) {
+                row = new Object[14];
+                row[0] = rs.getInt(1);  // id
+                row[1] = rs.getInt(2);  // student id
+                row[2] = rs.getInt(3);  // Semester id
+                row[3] = rs.getString(4);   // Course1
+                row[4] = rs.getDouble(5);   // Score1
+                row[5] = rs.getString(6);   // Course2
+                row[6] = rs.getDouble(7);   // Score2
+                row[7] = rs.getString(8);   // Course3
+                row[8] = rs.getDouble(9);   // Score3
+                row[9] = rs.getString(10);   // Course4
+                row[10] = rs.getDouble(11);  // Score4
+                row[11] = rs.getString(12);  // Course5
+                row[12] = rs.getDouble(13);  // Score4
+                row[13] = rs.getDouble(14);  // Average
+                model.addRow(row);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Score.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void update(int id, double score1, double score2, double score3, double score4, double score5, double average) {
+
+        String sql = "UPDATE score SET score1 = ?, score2 = ?, score3 = ?, score4 = ?, score5 = ?, average = ? WHERE id = ?";
+
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setDouble(1, score1);
+            ps.setDouble(2, score2);
+            ps.setDouble(3, score3);
+            ps.setDouble(4, score4);
+            ps.setDouble(5, score5);
+            ps.setDouble(6, average);
+            ps.setInt(7, id);
+            if (ps.executeUpdate() > 0) {
+                JOptionPane.showMessageDialog(null, "Score update successfully");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Score.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
 }

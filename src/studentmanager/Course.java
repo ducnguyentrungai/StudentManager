@@ -103,7 +103,7 @@ public class Course {
     }
 
     // Đưa dữ liệu lên database
-    public void insert(int id, int sid, int se, String course1, String course2, String course3,String course4, String course5) {
+    public void insert(int id, int sid, int se, String course1, String course2, String course3, String course4, String course5) {
         String sql = "insert into course values(?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             ps = con.prepareStatement(sql);
@@ -123,7 +123,7 @@ public class Course {
             Logger.getLogger(Student.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     // Lấy dữ liệu trong database và đổ đầy vào bảng course
     public void getCourseValue(JTable table, String searchValue) {
         String sql = "SELECT * FROM course\n"
