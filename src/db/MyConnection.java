@@ -6,12 +6,11 @@ import java.sql.SQLException;
 
 public class MyConnection {
 
-    private static String username = "root";
-    private static String password = "mysql";
-    private static String url = "jdbc:mysql://localhost:3306/student_management";
-    private static Connection con = null;
-
     public static Connection getConnection() {
+        String username = "root";
+        String password = "mysql";
+        String url = "jdbc:mysql://localhost:3306/student_management";
+
         try {
             // JDBC 4.0 trở đi hỗ trợ autoloading của driver mà không cần gọi classforName.
             // Class.forName("com.mysql.cj.jdbc.Driver");
@@ -22,12 +21,12 @@ public class MyConnection {
         return null;
     }
 
-    public static void main(String[] args) {
-        Connection connection = getConnection();
-        if (connection != null) {
-            System.out.println("Successful!");
-        } else {
-            System.out.println("Erorr!");
-        }
-    }
+//    public static void main(String[] args) {
+//        Connection connection = getConnection();
+//        if (connection != null) {
+//            System.out.println("Successful!");
+//        } else {
+//            System.out.println("Erorr!");
+//        }
+//    }
 }

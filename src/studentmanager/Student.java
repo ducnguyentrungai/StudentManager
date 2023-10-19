@@ -16,7 +16,6 @@ public class Student {
 
     // Kết nối với database.
     Connection con = MyConnection.getConnection();
-    // 
     PreparedStatement ps;
 
     public int getMax() {
@@ -38,7 +37,7 @@ public class Student {
     // Đưa dữ liệu lên database
     public void insert(int id, String sname, String date, String gender, String email, String phone,
             String father, String mother, String address1, String address2, String imagePath) {
-        String sql = "insert into student values(?, ?, ?,?,?,?,?,?,?,?, ?)";
+        String sql = "insert into student values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);

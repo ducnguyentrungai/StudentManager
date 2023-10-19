@@ -1,4 +1,4 @@
-package studentmanager;
+package home;
 
 import db.MyConnection;
 import java.awt.Color;
@@ -24,6 +24,11 @@ import javax.swing.JTable;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import studentmanager.Course;
+import login.Login;
+import studentmanager.MarksSheet;
+import studentmanager.Score;
+import studentmanager.Student;
 
 public class Home extends javax.swing.JFrame {
 
@@ -1493,7 +1498,7 @@ public class Home extends javax.swing.JFrame {
                 .addGroup(jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel24, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel25, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 708, Short.MAX_VALUE))
+                    .addComponent(jPanel25, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel23Layout.setVerticalGroup(
@@ -1918,7 +1923,7 @@ public class Home extends javax.swing.JFrame {
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         int a = JOptionPane.showConfirmDialog(this, "Do you want to logout now?", "Select", JOptionPane.YES_NO_OPTION);
         if (a == 0) {
-            new Login().setVisible(true);
+//            new Login().setVisible(true);
             this.dispose();
         }
     }//GEN-LAST:event_jButton9ActionPerformed
@@ -1949,7 +1954,7 @@ public class Home extends javax.swing.JFrame {
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
         int a = JOptionPane.showConfirmDialog(this, "Do you want to logout now?", "Select", JOptionPane.YES_NO_OPTION);
         if (a == 0) {
-            new Login().setVisible(true);
+//            new Login().setVisible(true);
             this.dispose();
         }
     }//GEN-LAST:event_jButton18ActionPerformed
@@ -1957,7 +1962,7 @@ public class Home extends javax.swing.JFrame {
     private void jButton27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton27ActionPerformed
         int a = JOptionPane.showConfirmDialog(this, "Do you want to logout now?", "Select", JOptionPane.YES_NO_OPTION);
         if (a == 0) {
-            new Login().setVisible(true);
+//            new Login().setVisible(true);
             this.dispose();
         }
     }//GEN-LAST:event_jButton27ActionPerformed
@@ -1965,7 +1970,7 @@ public class Home extends javax.swing.JFrame {
     private void jButton36ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton36ActionPerformed
         int a = JOptionPane.showConfirmDialog(this, "Do you want to logout now?", "Select", JOptionPane.YES_NO_OPTION);
         if (a == 0) {
-            new Login().setVisible(true);
+//            new Login().setVisible(true);
             this.dispose();
         }
     }//GEN-LAST:event_jButton36ActionPerformed
@@ -2496,13 +2501,13 @@ public class Home extends javax.swing.JFrame {
         return icon;
     }
 
-//    public static void main(String args[]) {
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new Home().setVisible(true);
-//            }
-//        });
-//    }
+    public static void main(String args[]) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Home().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
