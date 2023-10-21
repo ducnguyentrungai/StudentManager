@@ -177,7 +177,35 @@ public class Score {
         } catch (SQLException ex) {
             Logger.getLogger(Score.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+    }
+    public void sortAverage(JTable table) {
+        String sql = "select * from score order by average";
+        try {
+            ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            Object[] row;
+            while (rs.next()) {
+               row = new Object[14];
+                row[0] = rs.getInt(1);  // id
+                row[1] = rs.getInt(2);  // student id
+                row[2] = rs.getInt(3);  // Semester id
+                row[3] = rs.getString(4);   // Course1
+                row[4] = rs.getDouble(5);   // Score1
+                row[5] = rs.getString(6);   // Course2
+                row[6] = rs.getDouble(7);   // Score2
+                row[7] = rs.getString(8);   // Course3
+                row[8] = rs.getDouble(9);   // Score3
+                row[9] = rs.getString(10);   // Course4
+                row[10] = rs.getDouble(11);  // Score4
+                row[11] = rs.getString(12);  // Course5
+                row[12] = rs.getDouble(13);  // Score4
+                row[13] = rs.getDouble(14);  // Average
+                model.addRow(row);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Student.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
