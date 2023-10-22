@@ -39,7 +39,7 @@ public class Course {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                Home.jTextField11.setText(String.valueOf(rs.getInt(1)));
+                Home.tfCourseStudentID.setText(String.valueOf(rs.getInt(1)));
                 return true;
             } else {
                 JOptionPane.showMessageDialog(null, "Student id doesn't exit");

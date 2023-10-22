@@ -4,8 +4,8 @@ public class Vigenere {
 
     public String encryptVigenere(String plaintext, String key) {
         String encode = "";
-        int textLength = plaintext.length();    // Độ dài của đoạn plaintext
-        int keyLength = key.length();           // Độ dài của khóa
+        int textLength = plaintext.length();    
+        int keyLength = key.length();          
         int count = 0;
         for (int i = 0; i < textLength; i++) {
             char textChar = plaintext.charAt(i);
@@ -18,7 +18,6 @@ public class Vigenere {
                 char c = (char) (((textChar - 65 + keyChar - 65) % 26) + 65);
                 encode += c;
             }
-
             count++;
             if (count == keyLength) {
                 count = 0;
@@ -29,8 +28,8 @@ public class Vigenere {
 
     public String decryptVigenere(String plaintext, String key) {
         String decode = "";
-        int textLength = plaintext.length();    // Độ dài của đoạn plaintext
-        int keyLength = key.length();           // Độ dài của khóa
+        int textLength = plaintext.length();    
+        int keyLength = key.length();           
         int count = 0;
         for (int i = 0; i < textLength; i++) {
             char textChar = plaintext.charAt(i);
@@ -51,15 +50,4 @@ public class Vigenere {
         return decode;
     }
 
-//    public static void main(String[] args) {
-//        String key = "oop";
-//        String text1 = "admin";
-//        String text = "Abc";
-//
-//        String en = encryptVigenere(text, key);
-//        String de = decryptVigenere(en, key);
-//
-//        System.out.println(en);
-//        System.out.println(de);
-//    }
 }

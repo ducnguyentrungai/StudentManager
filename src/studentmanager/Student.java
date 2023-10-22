@@ -23,7 +23,7 @@ public class Student {
         Statement st;
         try {
             st = con.createStatement();
-            ResultSet rs = st.executeQuery("select max(id) from student");  // Câu lệnh MySQL này lấy ra id lớn nhất trong table student.
+            ResultSet rs = st.executeQuery("select max(id) from student"); 
             while (rs.next()) {
                 id = rs.getInt(1);
             }
@@ -225,18 +225,20 @@ public class Student {
     }
 
     public void delete(int id) {
-        int yesOrNo = JOptionPane.showConfirmDialog(null, "Course and score  records will also be deleted", "Student Dlete", JOptionPane.OK_CANCEL_OPTION);
+        int yesOrNo = JOptionPane.showConfirmDialog(null,
+                "Course and score  records will also be deleted", 
+                "Student Dlete", JOptionPane.OK_CANCEL_OPTION);
         if (yesOrNo == JOptionPane.OK_OPTION) {
             try {
                 ps = con.prepareStatement("delete  from student where id = ?");
                 ps.setInt(1, id);
                 if (ps.executeUpdate() > 0) {
-                    JOptionPane.showMessageDialog(null, "Student deleted sucessfully");
+                    JOptionPane.showMessageDialog(null, 
+                            "Student deleted sucessfully");
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(Student.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
-
 }

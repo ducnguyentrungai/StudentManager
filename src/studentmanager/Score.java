@@ -41,13 +41,13 @@ public class Score {
             ps.setInt(2, semeterNo);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                Home.jTextField13.setText(rs.getString(2));
-                Home.jTextField16.setText(rs.getString(3));
-                Home.jTextCourse1.setText(rs.getString(4));
-                Home.jTextCourse2.setText(rs.getString(5));
-                Home.jTextCourse3.setText(rs.getString(6));
-                Home.jTextCourse4.setText(rs.getString(7));
-                Home.jTextCourse5.setText(rs.getString(8));
+                Home.tfScoreStudentID.setText(rs.getString(2));
+                Home.tfScoreSemester.setText(rs.getString(3));
+                Home.tfScoreCourse1.setText(rs.getString(4));
+                Home.tfScoreCourse2.setText(rs.getString(5));
+                Home.tfScoreCourse3.setText(rs.getString(6));
+                Home.tfScoreCourse4.setText(rs.getString(7));
+                Home.tfScoreCourse5.setText(rs.getString(8));
                 return true;
             } else {
                 JOptionPane.showMessageDialog(null, "Student id or semester doesn't exit");
@@ -178,6 +178,7 @@ public class Score {
             Logger.getLogger(Score.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     public void sortAverage(JTable table) {
         String sql = "select * from score order by average";
         try {
@@ -186,7 +187,7 @@ public class Score {
             DefaultTableModel model = (DefaultTableModel) table.getModel();
             Object[] row;
             while (rs.next()) {
-               row = new Object[14];
+                row = new Object[14];
                 row[0] = rs.getInt(1);  // id
                 row[1] = rs.getInt(2);  // student id
                 row[2] = rs.getInt(3);  // Semester id
@@ -203,6 +204,70 @@ public class Score {
                 row[13] = rs.getDouble(14);  // Average
                 model.addRow(row);
             }
+        } catch (SQLException ex) {
+            Logger.getLogger(Student.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void refreshScore(JTable table) {
+        String sql = "select * from score order by id asc";
+        try {
+            ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            Object[] row;
+            while (rs.next()) {
+                row = new Object[14];
+                row[0] = rs.getInt(1);  // id
+                row[1] = rs.getInt(2);  // student id
+                row[2] = rs.getInt(3);  // Semester id
+                row[3] = rs.getString(4);   // Course1
+                row[4] = rs.getDouble(5);   // Score1
+                row[5] = rs.getString(6);   // Course2
+                row[6] = rs.getDouble(7);   // Score2
+                row[7] = rs.getString(8);   // Course3
+                row[8] = rs.getDouble(9);   // Score3
+                row[9] = rs.getString(10);   // Course4
+                row[10] = rs.getDouble(11);  // Score4
+                row[11] = rs.getString(12);  // Course5
+                row[12] = rs.getDouble(13);  // Score4
+                row[13] = rs.getDouble(14);  // Average
+                model.addRow(row);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Student.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+
+    public void searchScore(JTable table, String valueSearch) {
+        String sql = "select * from score where id = ?";
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, Integer.parseInt(valueSearch));
+            ResultSet rs = ps.executeQuery();
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            Object[] row;
+            while (rs.next()) {
+                row = new Object[14];
+                row[0] = rs.getInt(1);  // id
+                row[1] = rs.getInt(2);  // student id
+                row[2] = rs.getInt(3);  // Semester id
+                row[3] = rs.getString(4);   // Course1
+                row[4] = rs.getDouble(5);   // Score1
+                row[5] = rs.getString(6);   // Course2
+                row[6] = rs.getDouble(7);   // Score2
+                row[7] = rs.getString(8);   // Course3
+                row[8] = rs.getDouble(9);   // Score3
+                row[9] = rs.getString(10);   // Course4
+                row[10] = rs.getDouble(11);  // Score4
+                row[11] = rs.getString(12);  // Course5
+                row[12] = rs.getDouble(13);  // Score4
+                row[13] = rs.getDouble(14);  // Average
+                model.addRow(row);
+            }
+
         } catch (SQLException ex) {
             Logger.getLogger(Student.class.getName()).log(Level.SEVERE, null, ex);
         }
