@@ -31,7 +31,7 @@ import studentmanager.Score;
 import studentmanager.Student;
 
 public class Home extends javax.swing.JFrame {
-
+    
     Student student = new Student();
     Course course = new Course();
     Score score = new Score();
@@ -41,13 +41,14 @@ public class Home extends javax.swing.JFrame {
     private String imagePath;
     private int rowIndex;
     private NumberFormat nf = NumberFormat.getInstance();
-
+    
     public Home() {
         initComponents();
         init();
-
+        setLocationRelativeTo(null);
+        
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -1810,7 +1811,7 @@ public class Home extends javax.swing.JFrame {
         tfCourseID.setText(String.valueOf(course.getMax()));
         tfScoreID.setText(String.valueOf(score.getMax()));
     }
-
+    
     private void tableViewStudent() {
         student.getStudentValue(tbStudent, "");
         model = (DefaultTableModel) tbStudent.getModel();
@@ -1818,9 +1819,9 @@ public class Home extends javax.swing.JFrame {
         tbStudent.setShowGrid(true);
         tbStudent.setGridColor(Color.black);
         tbStudent.setBackground(Color.white);
-
+        
     }
-
+    
     private void tableViewCourse() {
         course.getCourseValue(tbCourse, "");
         model = (DefaultTableModel) tbCourse.getModel();
@@ -1829,7 +1830,7 @@ public class Home extends javax.swing.JFrame {
         tbCourse.setGridColor(Color.black);
         tbCourse.setBackground(Color.white);
     }
-
+    
     private void tableViewScore() {
         score.getScoreValue(tbScore, "");
         model = (DefaultTableModel) tbScore.getModel();
@@ -1838,7 +1839,7 @@ public class Home extends javax.swing.JFrame {
         tbScore.setGridColor(Color.black);
         tbScore.setBackground(Color.white);
     }
-
+    
     private void tableViewScoreView() {
         model = (DefaultTableModel) tbMarksSheet.getModel();
         tbMarksSheet.setRowHeight(30);
@@ -1846,7 +1847,7 @@ public class Home extends javax.swing.JFrame {
         tbMarksSheet.setGridColor(Color.black);
         tbMarksSheet.setBackground(Color.white);
     }
-
+    
     public void clearStudent() {
         // Khi ta clear thì thông tin rỗng.
         tfStudentID.setText(String.valueOf(student.getMax()));
@@ -1863,7 +1864,7 @@ public class Home extends javax.swing.JFrame {
         tbStudent.clearSelection();
         imagePath = null;
     }
-
+    
     public void clearCourse() {
         tfCourseID.setText(String.valueOf(course.getMax()));
         tfScoreCourse3.setText(null);
@@ -1876,7 +1877,7 @@ public class Home extends javax.swing.JFrame {
         cbCourseCourse5.setSelectedIndex(0);
         tbCourse.clearSelection();
     }
-
+    
     public void clearSore() {
         tfScoreID.setText(String.valueOf(score.getMax()));
         tfScoreStudentIDL.setText(null);
@@ -1895,9 +1896,9 @@ public class Home extends javax.swing.JFrame {
         tfScoreScore4.setText("0.0");
         tfScoreScore5.setText("0.0");
         tbScore.clearSelection();
-
+        
     }
-
+    
     public boolean isEmptyStudent() {
         if (tfStudentName.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Student name is missing");
@@ -1927,7 +1928,7 @@ public class Home extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Student Phone number must be '10' digits!");
             return false;
         }
-
+        
         if (tfStudentFather.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Student father name is missing");
             return false;
@@ -1945,7 +1946,7 @@ public class Home extends javax.swing.JFrame {
             return false;
         }
         return true;
-
+        
     }
 
     private void tfScoreScore1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfScoreScore1ActionPerformed
@@ -1966,11 +1967,11 @@ public class Home extends javax.swing.JFrame {
         } else {
             int sid = Integer.parseInt(tfMarksSheetID.getText());
             if (marksSheet.isIdExist(sid)) {
-
+                
                 tbMarksSheet.setModel(new DefaultTableModel(null, new Object[]{"ID", "StudentID", "Semester",
                     "Course1", "Score1", "Course2", "Score2", "Course3", "Score3", "Course4", "Score4", "Course5", "Score5", "Average"}));
                 marksSheet.getMarksSheetValue(tbMarksSheet, sid);
-
+                
                 String gpa = String.valueOf(String.format("%.2f", marksSheet.getGPA(sid)));
                 jLabel27.setText("GPA: " + gpa);
             } else {
@@ -2036,12 +2037,12 @@ public class Home extends javax.swing.JFrame {
                     String mother = tfStudentMother.getText();
                     String address1 = tfStudentAddress1.getText();
                     String address2 = tfStudentAddress2.getText();
-                    student.insert(id, name, date, gender, email, phone, father, 
+                    student.insert(id, name, date, gender, email, phone, father,
                             mother, address1, address2, imagePath);
                     tbStudent.setModel(new DefaultTableModel(null, new Object[]{"Student ID", "Student Name",
                         "Date of Birth", "Gender", "Email", "Phone Number",
                         "Father Name", "Mother Name", "Address Line 1", "Address Line 2", "Image Path"}));
-                    student.getStudentValue(tbStudent, ""); 
+                    student.getStudentValue(tbStudent, "");                    
                     clearStudent();
                 } else {
                     JOptionPane.showMessageDialog(this, "This phone alreadly exists");
@@ -2062,7 +2063,7 @@ public class Home extends javax.swing.JFrame {
     private void btStudentBrowesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btStudentBrowesActionPerformed
         JFileChooser file = new JFileChooser();
         file.setCurrentDirectory(new File(System.getProperty("user.home")));
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("*image", 
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("*image",
                 "jpg", "gif", "png");
         file.addChoosableFileFilter(filter);
         int output = file.showSaveDialog(file);
@@ -2166,7 +2167,7 @@ public class Home extends javax.swing.JFrame {
                 "Date of Birth", "Gender", "Email", "Phone Number",
                 "Father Name", "Mother Name", "Address Line 1",
                 "Address Line 2", "Image Path"}));
-            student.getStudentValue(tbStudent, ""); 
+            student.getStudentValue(tbStudent, "");            
             clearStudent();
         } else {
             JOptionPane.showMessageDialog(this, "");
@@ -2369,14 +2370,14 @@ public class Home extends javax.swing.JFrame {
                         String course3 = tfScoreCourse3.getText();
                         String course4 = tfScoreCourse4.getText();
                         String course5 = tfScoreCourse5.getText();
-
+                        
                         double score1 = Double.parseDouble(tfScoreScore1.getText());
                         double score2 = Double.parseDouble(tfScoreScore2.getText());
                         double score3 = Double.parseDouble(tfScoreScore3.getText());
                         double score4 = Double.parseDouble(tfScoreScore4.getText());
                         double score5 = Double.parseDouble(tfScoreScore5.getText());
                         double average = (score1 + score2 + score3 + score4 + score5) / 5;
-
+                        
                         nf.setMaximumFractionDigits(2);
                         score.insert(id, sid, semesterNo, course1, course2, course3, course4, course5, score1, score2, score3, score4, score5, Double.parseDouble(nf.format(average)));
                         tbScore.setModel(new DefaultTableModel(null, new Object[]{"ID", "StudentID", "Semester",
@@ -2394,7 +2395,7 @@ public class Home extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No student selected");
         }
     }//GEN-LAST:event_btScoreSaveActionPerformed
-
+    
     private boolean isNumeric(String s) {
         try {
             double d = Double.parseDouble(s);
@@ -2421,17 +2422,17 @@ public class Home extends javax.swing.JFrame {
     private void tbScoreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbScoreMouseClicked
         model = (DefaultTableModel) tbScore.getModel();
         rowIndex = tbScore.getSelectedRow();
-
+        
         tfScoreID.setText(model.getValueAt(rowIndex, 0).toString());
         tfScoreStudentID.setText(model.getValueAt(rowIndex, 1).toString());
         tfScoreSemester.setText(model.getValueAt(rowIndex, 2).toString());
-
+        
         tfScoreCourse1.setText(model.getValueAt(rowIndex, 3).toString());
         tfScoreCourse2.setText(model.getValueAt(rowIndex, 5).toString());
         tfScoreCourse3.setText(model.getValueAt(rowIndex, 7).toString());
         tfScoreCourse4.setText(model.getValueAt(rowIndex, 9).toString());
         tfScoreCourse5.setText(model.getValueAt(rowIndex, 11).toString());
-
+        
         tfScoreScore1.setText(model.getValueAt(rowIndex, 4).toString());
         tfScoreScore2.setText(model.getValueAt(rowIndex, 6).toString());
         tfScoreScore3.setText(model.getValueAt(rowIndex, 8).toString());
@@ -2512,12 +2513,12 @@ public class Home extends javax.swing.JFrame {
             "Course1", "Score1", "Course2", "Score2", "Course3", "Score3", "Course4", "Score4", "Course5", "Score5", "Average"}));
         score.sortAverage(tbScore);
     }//GEN-LAST:event_btScoreSortActionPerformed
-
+    
     private ImageIcon imageAdjust(String path, byte[] pic) {
         ImageIcon myImage = null;
         if (path != null) {
             myImage = new ImageIcon(path);
-
+            
         } else {
             myImage = new ImageIcon(pic);
         }
@@ -2527,13 +2528,11 @@ public class Home extends javax.swing.JFrame {
         return icon;
     }
 
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Home().setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        java.awt.EventQueue.invokeLater(() -> {
+//            new Home().setVisible(true);
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCourseClear;

@@ -180,7 +180,7 @@ public class Score {
     }
 
     public void sortAverage(JTable table) {
-        String sql = "select * from score order by average";
+        String sql = "select * from score order by average desc";
         try {
             ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();

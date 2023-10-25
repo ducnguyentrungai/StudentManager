@@ -31,7 +31,6 @@ public class Student {
             Logger.getLogger(Student.class.getName()).log(Level.SEVERE, null, ex);
         }
         return id + 1;
-
     }
 
     // Đưa dữ liệu lên database

@@ -35,8 +35,10 @@ public class Login extends javax.swing.JFrame {
         btCancel = new javax.swing.JButton();
         lbVisible = new javax.swing.JLabel();
         lbInvisible = new javax.swing.JLabel();
+        btCreateAccount = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setUndecorated(true);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -82,26 +84,30 @@ public class Login extends javax.swing.JFrame {
         pfPassword.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.add(pfPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(139, 176, 300, 30));
 
+        btLogin.setBackground(new java.awt.Color(51, 51, 255));
         btLogin.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        btLogin.setForeground(new java.awt.Color(255, 255, 255));
         btLogin.setText("Login");
-        btLogin.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btLogin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         btLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btLoginActionPerformed(evt);
             }
         });
-        jPanel1.add(btLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 240, 117, 28));
+        jPanel1.add(btLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 230, 117, 28));
 
+        btCancel.setBackground(new java.awt.Color(0, 51, 255));
         btCancel.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        btCancel.setForeground(new java.awt.Color(255, 255, 255));
         btCancel.setText("Cancel");
         btCancel.setToolTipText("");
-        btCancel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btCancel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         btCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btCancelActionPerformed(evt);
             }
         });
-        jPanel1.add(btCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 240, 110, 28));
+        jPanel1.add(btCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 230, 110, 28));
 
         lbVisible.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbVisible.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\StudentManager\\StudentManager\\src\\image\\invisible.png")); // NOI18N
@@ -121,15 +127,26 @@ public class Login extends javax.swing.JFrame {
         });
         jPanel1.add(lbInvisible, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 180, 40, 20));
 
+        btCreateAccount.setBackground(new java.awt.Color(0, 204, 51));
+        btCreateAccount.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        btCreateAccount.setForeground(new java.awt.Color(255, 255, 255));
+        btCreateAccount.setText("Create new account");
+        btCreateAccount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCreateAccountActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btCreateAccount, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 278, 260, 30));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
         );
 
         pack();
@@ -199,6 +216,12 @@ public class Login extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btLoginActionPerformed
 
+    private void btCreateAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCreateAccountActionPerformed
+        CreateAccount ca = new CreateAccount();
+        ca.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btCreateAccountActionPerformed
+
     public boolean isEmpty() {
         if (tfUsername.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Username is missing");
@@ -219,6 +242,7 @@ public class Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCancel;
+    private javax.swing.JButton btCreateAccount;
     private javax.swing.JButton btLogin;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbInvisible;
